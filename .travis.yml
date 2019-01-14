@@ -1,5 +1,8 @@
 language: scala
 
+scala:
+  - 2.12.8
+
 # These directories are cached at the end of the build
 cache:
   directories:
