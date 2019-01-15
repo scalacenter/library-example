@@ -15,6 +15,15 @@ before_cache:
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
   - find $HOME/.sbt        -name "*.lock"               -print -delete
 
+# publish when a tag is pushed to master
+deploy:
+  provider: script
+  script: sbt publishSigned sonatypeRelease
+  on:
+    branch: master
+    tags: true
+  skip_cleanup: true
+
 # credentials for publishing releases to Sonatype
 env:
   global:
@@ -23,6 +32,5 @@ env:
     - secure: "bw5UWheCm355JDMKFUqg8yPjhrnfHz+ubHysJ0c81Qq7TMOCcCxQ4q/h5Znp4joYOl1Dxsp+NcMG5WJKH8Cv8qVqSP8NhdXIEVdUoqbKvKs9Cyz4oMZLLA0hweehqEMFddchz9JvXLgBu8VHY1QhfEy0W80NuDt4TprgiyQKMbM0Q6C5a52bbPyXvdOGLho6IEdwk4tSzglJx9B1tuP/mT7exm+9RcDa6/jNK1rWt3bzxuCaYuUCp33TMT/8gQxgqJVlpMPBMEgF0C75CiPfb23aePolFHOXlbdxvgfwzLRNnC71VPBGiCJbwW6uh3WgGZHFeRcAgLp691gl1DnKsWou47IzfaoQMAIRDcp/8TSWILwB7D8z1cQpnERrkJXjNAK4CcZZcfxz2hHG6N+CBl7Ydf5+++mvfhMWqWEwXf8DMCApUQSToeVL8y8oxB4ykA/so+u9ateKYv8C8u4BoJLJg0+JHZJ5YNtfJoFldO1v432Xrirem0r3npg42FTlJBItkRi7YZWbtzr6mi5pbYiTkhexm2MPhOruFVZaDJcRSbeKgL/NpcY1dUvrAFpTGMprAV+SttHjbIv67E+79tQ5CEr0zNXQ+U/MYhtDOisV2bA79w+ElQ59kmuSr7ehtTD5Odz8KRojOLtJYdJ740jdWy8xrQ9Dlh1ujSKz3IY="
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in pubring.asc.enc -out pubring.asc -d
-  - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in secring.asc.enc -out secring.asc -d
-
+  - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
