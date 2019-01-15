@@ -12,3 +12,7 @@ developers := List(Developer("julienrf", "Julien Richard-Foy", "julien.richard-f
 
 description := "A library that does nothing useful"
 homepage := Some(url("http://scalacenter.github.io/library-example"))
+
+// publish to the sonatype repository
+publishTo := sonatypePublishTo.value
+
