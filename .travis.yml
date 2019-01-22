@@ -15,7 +15,9 @@ jobs:
   include:
     - stage: test
       script: sbt +test
+      name: "Tests"
     - script: sbt makeSite
+      name: "Documentation"
 
 deploy:
   skip_cleanup: true
