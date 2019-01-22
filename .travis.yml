@@ -1,6 +1,7 @@
 language: scala
 
 scala:
+  - 2.11.12
   - 2.12.8
 
 # These directories are cached at the end of the build
@@ -17,7 +18,7 @@ before_cache:
 # publish when a tag is pushed to master
 deploy:
   provider: script
-  script: sbt publishSigned sonatypeRelease
+  script: sbt publishSigned sonatypeRelease makeSite ghpagesPushSite
   on:
     branch: master
     tags: true

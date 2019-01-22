@@ -26,3 +26,12 @@ credentials ++= (
     password <- sys.env.get("SONATYPE_PASSWORD")
   } yield Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password)
 ).toList
+
+// documentation website
+enablePlugins(ParadoxPlugin, ParadoxSitePlugin, TutPlugin, SiteScaladocPlugin, GhpagesPlugin)
+tutSourceDirectory := sourceDirectory.value / "documentation"
+Paradox / sourceDirectory := tutTargetDirectory.value
+makeSite := makeSite.dependsOn(tut).value
+SiteScaladoc / siteSubdirName := "api"
+paradoxProperties += ("scaladoc.base_url" -> "api")
+git.remoteRepo := "git@github.com:scalacenter/library-example.git"
