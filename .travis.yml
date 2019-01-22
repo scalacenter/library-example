@@ -18,7 +18,7 @@ stages:
   - documentation
   # deploy if a tag has been pushed to the master branch
   - name: deploy
-    if: (branch = master) AND (tag = true)
+    if: (branch = master) AND (tag =~ /^v.+/)
 
 jobs:
   include:
