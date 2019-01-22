@@ -18,22 +18,17 @@ jobs:
       name: "Tests"
     - script: sbt makeSite
       name: "Documentation"
-
-deploy:
-  skip_cleanup: true
-  on:
-    branch: master
-    tags: true
-  provider: script
-  script: sbt makeSite +publishSigned sonatypeRelease ghpagesPushSite
-
-before_deploy:
-  # decrypt PGP secret key and GitHub SSH key
-  - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in ci/secrets.tar.enc -out ci/secrets.tar -d
-  - tar xvf ci/secrets.tar
-  - chmod 600 ci/travis-key
-  - eval "$(ssh-agent -s)"
-  - ssh-add ci/travis-key
+    - stage: deploy
+      if: (branch = master) AND (tag =~ ^v)
+      script:
+        # decrypt PGP secret key and GitHub SSH key
+        - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in ci/secrets.tar.enc -out ci/secrets.tar -d
+        - tar xvf ci/secrets.tar
+        - chmod 600 ci/travis-key
+        - eval "$(ssh-agent -s)"
+        - ssh-add ci/travis-key
+        # perform deployment
+        - sbt makeSite +publishSigned sonatypeRelease ghpagesPushSite
 
 # credentials for publishing releases to Sonatype
 env:
