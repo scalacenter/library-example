@@ -3,6 +3,13 @@ name := "library-example"
 // also used as a `groupId` by Sonatype
 organization := "ch.epfl.scala"
 
+crossScalaVersions := Seq("2.12.8", "2.11.12")
+
+scalaVersion := crossScalaVersions.value.head
+
+libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.5.5" % Test
+testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
+
 // indicate the open source licenses that apply to our project
 licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
@@ -17,8 +24,8 @@ homepage := Some(url("http://scalacenter.github.io/library-example"))
 publishTo := sonatypePublishTo.value
 
 // retrieve secrets to sign files and authenticate to Sonatype
-pgpPublicRing := file("pubring.asc")
-pgpSecretRing := file("secring.asc")
+pgpPublicRing := file("ci/pubring.asc")
+pgpSecretRing := file("ci/secring.asc")
 pgpPassphrase := sys.env.get("PGP_PASSPHRASE").map(_.toArray)
 credentials ++= (
   for {

@@ -1,9 +1,5 @@
 language: scala
 
-scala:
-  - 2.11.12
-  - 2.12.8
-
 # These directories are cached at the end of the build
 cache:
   directories:
@@ -15,15 +11,28 @@ before_cache:
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
   - find $HOME/.sbt        -name "*.lock"               -print -delete
 
-# publish when a tag is pushed to master
-deploy:
-  provider: script
-  script: sbt +publishSigned sonatypeRelease makeSite ghpagesPushSite
-  on:
-    branch: master
-    tags: true
-    scala: 2.12.8
-  skip_cleanup: true
+jobs:
+  include:
+
+    # run the tests for all Scala versions
+    - stage: test
+      script: sbt +test
+
+    # build the documentation
+    - stage: documentation
+      script: sbt makeSite
+
+    # deploy if a tag has been pushed to the master branch
+    - stage: deploy
+      if: (branch = master) AND (tag IS present)
+      script:
+        # decrypt PGP secret key and GitHub SSH key
+        - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in ci/secrets.tar.enc -out ci/secrets.tar -d
+        - tar xvf ci/secrets.tar
+        - chmod 600 ci/travis-key
+        - eval "$(ssh-agent -s)"
+        - ssh-add ci/travis-key
+        - sbt makeSite +publishSigned sonatypeRelease ghpagesPushSite
 
 # credentials for publishing releases to Sonatype
 env:
@@ -31,6 +40,3 @@ env:
     - secure: "dllL1w+pZT6yTBYwy5hX07t8r0JL5Cqer6YgYnXJ+q3OhSGUs7ul2fDUiqVxGIgUpTij1cGwBmoJOTbRk2V/be4+3Ua4ZNrAxjNF2ehqUcV5KdC3ufTTTXX0ZoL9MqEIb+GKzKtPqbzR4uly/5q5NbV7J1GeZRhummnx87POl6yH4kmXTpahig7vvnwN5dLanMshRb2Z8tO8kF4SnC31QuNBDQLnS89PEajHQu+LRAJloYvcikm+NeUj79m64CYg9JZdrHvZpIYKOMY1twT+lYoerqzG+asiNE1WrDs/We1RFVgcrKLpEThcvuIxuuPKhu24+0KteAX+7z/ulT0lndyBRfuuDjHV844LrNbjhnTB64V1uF7aEdaEZRLTsFQnFZqzpoqYqxzgfow9LN/kU5CMJX1R4wwf3YgR1VC9ZfjZnu0Pbt24g48I+72ZDNk3oRZoPsN9AtovwdZcg7TgU/iPcHNKSNhEZRP6ryhv/9aX3URLkfhnDaJmTXAnC3YCYt5cGo0FBUHARA+AHcas14Dx95bFSbH7EBivb2LiDmi44goRCWR4p+vNSBJ6Ak1NZz/+paai0pXDG6S/VdqwGSmmfjn7m9H3L5c8X5xNich9qtZbWz0fj2baZGq/doA8KE91JCzX11p/9fKNzbVivQZdsw3C3ZWDjkMZM+hl++0="
     - secure: "clR0WPfxY4j5M6GSuS3lvFqg+6g+EN62xmSOVFnCGVTHx6tD3PFJzCtodv+ZFORAK96r9Xrihpw8TCrXGb7pM7z53lzqfj5GnHa+JZsi+rhlGnFQkxcc2d6EpsQMPQ1own1TS0cH7GCN5h7EuKOfIAW8yV3/507Ix3ugP4rp+gAXpFOE/FXvkUp3FFddHgmBUVWyJ+be660oejrzX0tmc4q3wmyWXFK7BOotnRFXWt8BFyW3/DljekJU06Yi+JAxdxeLlACNpL9giPJ8llONmDoNzJcpeIzMgG2u179tAXwGjvW1abcvyEmL2REjYuTdZtRbWz8lY7f5XG93m9snoBePnMmg/tYHFLE0iT2p9+NvLiFGhejXOeLZn+El8jqBpXpMCgouLzg1W2in3Yx9Xz1ENLS3QHU2Snsh/NG95XX/r5BQePOwdU7k0sOoyfs1iUNVZwBhcnRwp2/87hOndCcq9TXTg6lcx0e+nzM3TmqdHvz6fIRYvGS7gVI06rStzXAvf7gmx6ESPknyNIB8Ah8MRgjNAC33S7ZTYwq88Dn+hdH99opUYJJcDeZTk3m5pCYX5RBV/xRetrDm9WccZucVuWUu/fiflUSsMFIUkKBO4uMOFHtbYf0oqczcFFxKrmzaMd3fO+8X9bIyhAGp80d1oMNhYxUvDGMShgSsvGk="
     - secure: "bw5UWheCm355JDMKFUqg8yPjhrnfHz+ubHysJ0c81Qq7TMOCcCxQ4q/h5Znp4joYOl1Dxsp+NcMG5WJKH8Cv8qVqSP8NhdXIEVdUoqbKvKs9Cyz4oMZLLA0hweehqEMFddchz9JvXLgBu8VHY1QhfEy0W80NuDt4TprgiyQKMbM0Q6C5a52bbPyXvdOGLho6IEdwk4tSzglJx9B1tuP/mT7exm+9RcDa6/jNK1rWt3bzxuCaYuUCp33TMT/8gQxgqJVlpMPBMEgF0C75CiPfb23aePolFHOXlbdxvgfwzLRNnC71VPBGiCJbwW6uh3WgGZHFeRcAgLp691gl1DnKsWou47IzfaoQMAIRDcp/8TSWILwB7D8z1cQpnERrkJXjNAK4CcZZcfxz2hHG6N+CBl7Ydf5+++mvfhMWqWEwXf8DMCApUQSToeVL8y8oxB4ykA/so+u9ateKYv8C8u4BoJLJg0+JHZJ5YNtfJoFldO1v432Xrirem0r3npg42FTlJBItkRi7YZWbtzr6mi5pbYiTkhexm2MPhOruFVZaDJcRSbeKgL/NpcY1dUvrAFpTGMprAV+SttHjbIv67E+79tQ5CEr0zNXQ+U/MYhtDOisV2bA79w+ElQ59kmuSr7ehtTD5Odz8KRojOLtJYdJ740jdWy8xrQ9Dlh1ujSKz3IY="
-
-before_install:
-  - openssl aes-256-cbc -K $encrypted_602f530300eb_key -iv $encrypted_602f530300eb_iv -in secring.asc.enc -out secring.asc -d
