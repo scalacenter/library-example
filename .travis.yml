@@ -13,11 +13,13 @@ before_cache:
 
 jobs:
   include:
+
     - stage: test
       script: sbt +test
       name: "Tests"
     - script: sbt makeSite
       name: "Documentation"
+
     - stage: deploy
       if: tag =~ ^v
       script:
