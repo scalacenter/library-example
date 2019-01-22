@@ -18,10 +18,11 @@ before_cache:
 # publish when a tag is pushed to master
 deploy:
   provider: script
-  script: sbt publishSigned sonatypeRelease makeSite ghpagesPushSite
+  script: sbt +publishSigned sonatypeRelease makeSite ghpagesPushSite
   on:
     branch: master
     tags: true
+    scala: 2.12.8
   skip_cleanup: true
 
 # credentials for publishing releases to Sonatype
