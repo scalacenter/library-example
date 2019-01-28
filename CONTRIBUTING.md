@@ -25,3 +25,20 @@ From the sbt shell:
 ~~~
 > +test
 ~~~
+
+## Publish a Release
+
+Before releasing a new major version, increment the `binaryCompatibleVersion` value, in file `build.sbt`,
+and commit the changes:
+
+~~~ diff
+-val binaryCompatibleVersion = "1.0.0"
++val binaryCompatibleVersion = "2.0.0"
+~~~
+
+Push a Git tag:
+
+~~~ bash
+$ git tag v2.0.0
+$ git push origin v2.0.0
+~~~

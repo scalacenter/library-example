@@ -33,3 +33,13 @@ makeSite := makeSite.dependsOn(tut).value
 SiteScaladoc / siteSubdirName := "api"
 paradoxProperties += ("scaladoc.base_url" -> "api")
 git.remoteRepo := sonatypeProjectHosting.value.get.scmUrl
+
+// binary compatibility check
+val binaryCompatibleVersion = "0.5.0"
+mimaPreviousArtifacts := {
+  val thisProjectID = projectID.value
+  val binaryCompatibleProjectID =
+    (thisProjectID.organization % thisProjectID.name % binaryCompatibleVersion)
+      .withCrossVersion(thisProjectID.crossVersion)
+  Set(binaryCompatibleProjectID)
+}
