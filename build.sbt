@@ -12,12 +12,10 @@ testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
 // indicate the open source licenses that apply to our project
 licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
-scmInfo := Some(ScmInfo(url("https://github.com/scalacenter/library-example"), "scm:git@github.com:scalacenter/library-example.git"))
-
-developers := List(Developer("julienrf", "Julien Richard-Foy", "julien.richard-foy@epfl.ch", url("https://people.epfl.ch/julien.richard-foy")))
-
 description := "A library that does nothing useful"
-homepage := Some(url("http://scalacenter.github.io/library-example"))
+
+import xerial.sbt.Sonatype._
+sonatypeProjectHosting := Some(GitHubHosting("scalacenter", "library-example", "julien.richard-foy@epfl.ch"))
 
 // publish to the sonatype repository
 publishTo := sonatypePublishTo.value
@@ -40,4 +38,4 @@ Paradox / sourceDirectory := tutTargetDirectory.value
 makeSite := makeSite.dependsOn(tut).value
 SiteScaladoc / siteSubdirName := "api"
 paradoxProperties += ("scaladoc.base_url" -> "api")
-git.remoteRepo := "git@github.com:scalacenter/library-example.git"
+git.remoteRepo := sonatypeProjectHosting.value.get.scmUrl
