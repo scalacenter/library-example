@@ -14,12 +14,18 @@ before_cache:
 jobs:
   include:
 
+    # Check that code style rules are respected
+    - stage: style
+      script: sbt scalafmtCheck
+
+    # Check that the tests pass and the documentation can be built
     - stage: test
       script: sbt +test
       name: "Tests"
     - script: sbt makeSite
       name: "Documentation"
 
+    # Publish a release when a tag is pushed
     - stage: deploy
       if: tag =~ ^v
       script:
