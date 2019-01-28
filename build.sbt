@@ -35,11 +35,13 @@ paradoxProperties += ("scaladoc.base_url" -> "api")
 git.remoteRepo := sonatypeProjectHosting.value.get.scmUrl
 
 // binary compatibility check
-val binaryCompatibleVersion = "0.5.0"
-mimaPreviousArtifacts := {
-  val thisProjectID = projectID.value
-  val binaryCompatibleProjectID =
-    (thisProjectID.organization % thisProjectID.name % binaryCompatibleVersion)
-      .withCrossVersion(thisProjectID.crossVersion)
-  Set(binaryCompatibleProjectID)
-}
+val binaryCompatibleVersion: Option[String] = None
+mimaPreviousArtifacts := (binaryCompatibleVersion match {
+  case None    => Set.empty
+  case Some(v) =>
+    val module = projectID.value
+    val binaryCompatibleModule =
+      (module.organization % module.name % v)
+        .withCrossVersion(module.crossVersion)
+    Set(binaryCompatibleModule)
+})

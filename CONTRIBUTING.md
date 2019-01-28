@@ -11,7 +11,8 @@ You will need the following tools:
 
 ## Workflow
 
-Create your own fork of the repository and work in a local branch based on `master`.
+Create your own fork of the repository and work in a local branch based on `master`. Binary compatible
+fixes should be based on the corresponding branch version (e.g., `1.x`).
 
 ## Code Style
 
@@ -28,17 +29,18 @@ From the sbt shell:
 
 ## Publish a Release
 
-Before releasing a new major version, increment the `binaryCompatibleVersion` value, in file `build.sbt`,
-and commit the changes:
-
-~~~ diff
--val binaryCompatibleVersion = "1.0.0"
-+val binaryCompatibleVersion = "2.0.0"
-~~~
-
 Push a Git tag:
 
 ~~~ bash
 $ git tag v2.0.0
 $ git push origin v2.0.0
+~~~
+
+After releasing a new major version, create a new Git branch (e.g., `2.x`) that will contain the binary
+compatible evolutions of that version. In this branch, set the `binaryCompatibleVersion` (in file `build.sbt`)
+value to the major version number:
+
+~~~ diff
+-val binaryCompatibleVersion: Option[String] = None
++val binaryCompatibleVersion: Option[String] = Some("2.0.0")
 ~~~
