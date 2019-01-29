@@ -15,10 +15,10 @@ import xerial.sbt.Sonatype._
 sonatypeProjectHosting := Some(GitHubHosting("scalacenter", "library-example", "julien.richard-foy@epfl.ch"))
 // indicate the open source licenses that apply to our project
 licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
-// publish to the sonatype repository
+// publish to the Sonatype repository
 publishTo := sonatypePublishTo.value
 
-// retrieve secrets to sign files and authenticate to Sonatype
+// retrieve secrets to sign files
 pgpPublicRing := file("ci/pubring.asc")
 pgpSecretRing := file("ci/secring.asc")
 pgpPassphrase := sys.env.get("PGP_PASSPHRASE").map(_.toArray)
