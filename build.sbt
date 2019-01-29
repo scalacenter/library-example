@@ -9,14 +9,12 @@ organization := "ch.epfl.scala"
 libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.5.5" % Test
 testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
 
-// indicate the open source licenses that apply to our project
-licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
-
 description := "A library that does nothing useful"
 
 import xerial.sbt.Sonatype._
 sonatypeProjectHosting := Some(GitHubHosting("scalacenter", "library-example", "julien.richard-foy@epfl.ch"))
-
+// indicate the open source licenses that apply to our project
+licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 // publish to the sonatype repository
 publishTo := sonatypePublishTo.value
 
