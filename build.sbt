@@ -35,10 +35,4 @@ paradoxProperties += ("scaladoc.base_url" -> "api")
 git.remoteRepo := sonatypeProjectHosting.value.get.scmUrl
 
 // binary compatibility check
-mimaPreviousArtifacts := {
-  val majorVersionBranch = "(\\d+)\\.x".r
-  git.gitCurrentBranch.value match {
-    case "master"              => Set.empty
-    case majorVersionBranch(v) => Set(organization.value %% name.value % v)
-  }
-}
+mimaPreviousArtifacts := Set.empty // Disabled on `master` branch

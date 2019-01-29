@@ -37,10 +37,10 @@ $ git push origin v2.0.0
 ~~~
 
 After releasing a new major version, create a new Git branch (e.g., `2.x`) that will contain the binary
-compatible evolutions of that version. In this branch, set the `binaryCompatibleVersion` (in file `build.sbt`)
-value to the major version number:
+compatible evolutions of that version. In this branch, set the `mimaPreviousArtifacts` setting (in file
+`build.sbt`) to the following value:
 
 ~~~ diff
--val binaryCompatibleVersion: Option[String] = None
-+val binaryCompatibleVersion: Option[String] = Some("2.0.0")
+-mimaPreviousArtifacts := Set.empty
++mimaPreviousArtifacts := previousStableVersion.value.map(organization.value %% name.value % _).toSet
 ~~~
