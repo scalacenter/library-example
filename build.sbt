@@ -18,16 +18,11 @@ licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 // publish to the Sonatype repository
 publishTo := sonatypePublishTo.value
 
-// retrieve secrets to sign files
-pgpPublicRing := file("ci/pubring.asc")
-pgpSecretRing := file("ci/secring.asc")
-pgpPassphrase := sys.env.get("PGP_PASSPHRASE").map(_.toArray)
-
 // documentation website
-enablePlugins(ParadoxPlugin, ParadoxSitePlugin, TutPlugin, SiteScaladocPlugin, GhpagesPlugin)
-tutSourceDirectory := sourceDirectory.value / "documentation"
-Paradox / sourceDirectory := tutTargetDirectory.value
-makeSite := makeSite.dependsOn(tut).value
+enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin, GhpagesPlugin)
+mdocIn := sourceDirectory.value / "documentation"
+Paradox / sourceDirectory := mdocOut.value
+makeSite := makeSite.dependsOn(mdoc.toTask("")).value
 SiteScaladoc / siteSubdirName := "api"
 paradoxProperties += ("scaladoc.base_url" -> "api")
 git.remoteRepo := sonatypeProjectHosting.value.get.scmUrl
