@@ -1,7 +1,8 @@
 name: Continuous publication
 on:
   push:
-    tags:
+    branches: ['**']
+    tags: [v*]
 
 jobs:
   publish:
