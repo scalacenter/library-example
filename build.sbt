@@ -1,4 +1,4 @@
-crossScalaVersions := Seq("2.13.6", "2.12.8", "2.11.12")
+crossScalaVersions := Seq("2.13.6", "2.12.8")
 scalaVersion := crossScalaVersions.value.head
 
 name := "library-example"
