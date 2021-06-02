@@ -21,6 +21,7 @@ publishTo := sonatypePublishTo.value
 // documentation website
 enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin, GhpagesPlugin)
 mdocIn := sourceDirectory.value / "documentation"
+mdocExtraArguments += "--no-link-hygiene"
 Paradox / sourceDirectory := mdocOut.value
 makeSite := makeSite.dependsOn(mdoc.toTask("")).value
 SiteScaladoc / siteSubdirName := "api"
