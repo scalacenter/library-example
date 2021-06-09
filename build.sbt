@@ -23,7 +23,7 @@ pgpSecretRing := file("ci/secring.asc")
 pgpPassphrase := sys.env.get("PGP_PASSPHRASE").map(_.toArray)
 
 // documentation website
-enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin, GhpagesPlugin)
+enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin)
 mdocIn := sourceDirectory.value / "documentation"
 mdocExtraArguments += "--no-link-hygiene"
 Paradox / sourceDirectory := mdocOut.value
