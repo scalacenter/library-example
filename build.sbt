@@ -22,7 +22,7 @@ publishTo := sonatypePublishToBundle.value
 enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin)
 mdocIn := sourceDirectory.value / "documentation"
 mdocExtraArguments += "--no-link-hygiene"
-Paradox / sourceDirectory := mdocOut.value
+Compile / paradox / sourceDirectory := mdocOut.value
 makeSite := makeSite.dependsOn(mdoc.toTask("")).value
 SiteScaladoc / siteSubdirName := "api"
 paradoxProperties += ("scaladoc.base_url" -> "api")
