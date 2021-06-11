@@ -11,7 +11,7 @@ You will need the following tools:
 
 ## Workflow
 
-Create your own fork of the repository and work in a local branch based on `master`. Binary compatible
+Create your own fork of the repository and work in a local branch based on `main`. Binary compatible
 fixes should be based on the corresponding branch version (e.g., `1.x`).
 
 ## Code Style

@@ -1,4 +1,4 @@
-crossScalaVersions := Seq("2.13.6", "2.12.8")
+crossScalaVersions := Seq("2.13.6", "2.12.14")
 scalaVersion := crossScalaVersions.value.head
 
 name := "library-example"
@@ -26,7 +26,6 @@ Paradox / sourceDirectory := mdocOut.value
 makeSite := makeSite.dependsOn(mdoc.toTask("")).value
 SiteScaladoc / siteSubdirName := "api"
 paradoxProperties += ("scaladoc.base_url" -> "api")
-git.remoteRepo := sonatypeProjectHosting.value.get.scmUrl
 
 // binary compatibility check
 mimaPreviousArtifacts := Set.empty // Disabled on `master` branch
