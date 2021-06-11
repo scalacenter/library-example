@@ -1,6 +1,6 @@
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.6")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.2-1")
-addSbtPlugin("com.dwijnand" % "sbt-dynver" % "3.3.0")
+addSbtPlugin("com.dwijnand" % "sbt-dynver" % "4.1.1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.3.3")
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.21")
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.9.2")
