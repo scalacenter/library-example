@@ -1,42 +1,35 @@
-crossScalaVersions := Seq("2.13.6", "2.12.14")
-scalaVersion := crossScalaVersions.value.head
-
-name := "library-example"
-
-// also used as a `groupId` by Sonatype
-organization := "ch.epfl.scala"
-
-libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.8.3" % Test
-testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
-
-description := "A library that does nothing useful"
-
 import xerial.sbt.Sonatype._
-sonatypeProjectHosting := Some(GitHubHosting("scalacenter", "library-example", "julien.richard-foy@epfl.ch"))
-// indicate the open source licenses that apply to our project
-licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
-// publish to the Sonatype repository
-publishTo := sonatypePublishToBundle.value
 
-// documentation website
-enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin)
-mdocIn := sourceDirectory.value / "documentation"
-mdocExtraArguments += "--no-link-hygiene"
-Compile / paradox / sourceDirectory := mdocOut.value
-makeSite := makeSite.dependsOn(mdoc.toTask("")).value
-SiteScaladoc / siteSubdirName := "api"
-paradoxProperties += ("scaladoc.base_url" -> "api")
+lazy val `library-example` = project
+  .in(file("."))
+  .settings(
+    name := "library-example",
+    organization := "ch.epfl.scala",
+    description := "A library that does nothing useful",
+    crossScalaVersions := Seq("3.0.1-RC1", "3.0.0", "2.13.6", "2.12.14"),
+    scalaVersion := crossScalaVersions.value.head,
+    libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.8.3" % Test,
+    testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
+  ).settings(publishSettings)
+   .settings(siteSettings)
 
-// binary compatibility check
-mimaPreviousArtifacts := Set.empty // Disabled on `master` branch
+lazy val publishSettings = Def.settings(
+  sonatypeProjectHosting := Some(GitHubHosting("scalacenter", "library-example", "julien.richard-foy@epfl.ch")),
+  // indicate the open source licenses that apply to our project
+  licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
+  // publish to the Sonatype repository
+  publishTo := sonatypePublishToBundle.value,
+  // binary compatibility check
+  mimaPreviousArtifacts := Set.empty // Disabled on `master` branch
+)
 
-inThisBuild(List(
-  semanticdbEnabled := true,
-  semanticdbVersion := scalafixSemanticdb.revision,
-  scalafixScalaBinaryVersion := "2.13",
+lazy val root = project
+  .in(file("."))
+  .aggregate(`library-example`)
 
-  scalacOptions ++= Seq(
-    "-Yrangepos",
-    "-Ywarn-unused"
-  ),
-))
+lazy val siteSettings = Def.settings(
+  Compile / doc / scalacOptions ++= Seq(
+    "-siteroot", "./site",
+    //"-doc-root-content", "./target/scala-3.0.2-RC1/api",
+  )
+)
