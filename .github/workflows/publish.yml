@@ -21,10 +21,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: olafurpg/setup-scala@v12
       - name: Generate site
         run: sbt "site/doc"
-      - uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: target/site-output
+      - name: Deploy new site
+        run: |
+          echo "Setting up git"
+          git config user.name "gaction"
+          git config user.email "gaction@github.com"
+          git remote set-url origin https://gaction:${GITHUB_TOKEN}@github.com/vincenzobaz/library-example.git
+          git checkout gh-pages
+
+          echo "Adding new site files"
+          tag="$(basename ${{ github.ref }})"
+          mv target/site-output versions/$tag
+          git add versions/$tag
+          git commit -m "[action] adding versions $tag"
+
+          echo "Preparing new sites.json"
+          cat sites.json | jq --arg newver $tag '.versions[$newver] = "https://vincenzobaz.github.io/library-example/versions\($newver)"' > newsites.json
+          echo "OLD"
+          cat sites.json
+          echo "NEW"
+          cat newsites.json
+          rm sites.json
+          mv newsites.json sites.json
+
+          echo "Pushing new sites.json"
+          git add sites.json
+          git commit -m "[action] add new version sites.json"
+          git push origin gh-pages
