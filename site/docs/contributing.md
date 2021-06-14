@@ -1,5 +1,8 @@
-Contributing
-============
+---
+title: Contributing
+---
+
+# Contributing
 
 ## Requirements
 
