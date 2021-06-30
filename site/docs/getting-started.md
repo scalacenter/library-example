@@ -8,16 +8,14 @@ title: Getting started
 
 Add the following dependency to your `build.sbt` file:
 
-@@@vars
 ``` scala
 libraryDependencies += "ch.epfl.scala" %% "library-example" % "@VERSION@"
 ```
-@@@
 
-@@@ index
-* [Getting Started](getting-started.md)
-* [Reference](reference.md)
-@@@
+Further reading:
+
+ - [Getting Started](getting-started.md)
+ - [Reference](reference.md)
 
 
 ## Usage

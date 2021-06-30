@@ -12,6 +12,7 @@ lazy val `library-example` = project
     testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
   ).settings(publishSettings)
    .settings(siteSettings)
+   .enablePlugins(MdocPlugin)
 
 lazy val publishSettings = Def.settings(
   sonatypeProjectHosting := Some(GitHubHosting("scalacenter", "library-example", "julien.richard-foy@epfl.ch")),
@@ -19,7 +20,6 @@ lazy val publishSettings = Def.settings(
   licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
   // publish to the Sonatype repository
   publishTo := sonatypePublishToBundle.value,
-  Compile / doc / target := file("site-output"),
   // binary compatibility check
   mimaPreviousArtifacts := Set.empty // Disabled on `master` branch
 )
@@ -28,8 +28,26 @@ lazy val root = project
   .in(file("."))
   .aggregate(`library-example`)
 
-lazy val siteSettings = Def.settings(
-  Compile / doc / scalacOptions ++= Seq(
-    "-siteroot", "./site",
+lazy val siteSettings = {
+  val tmpSiteDir = "processed_site"
+  val siteDir = "site"
+  val outputSiteDir = "site-output"
+
+  val copySiteTask = Def.task {
+    IO.copyDirectory(
+      baseDirectory.value / "site",
+      target.value / tmpSiteDir
+    )
+  }
+
+  Def.settings(
+    Compile / doc / target := baseDirectory.value / outputSiteDir,
+    mdocIn := baseDirectory.value / siteDir / "docs",
+    mdocOut := target.value / tmpSiteDir / "docs",
+    mdocVariables := Map("VERSION" -> version.value),
+    Compile / doc := (Compile / doc).dependsOn(Def.sequential(copySiteTask, mdoc.toTask(""))).value,
+    Compile / doc / scalacOptions ++= Seq(
+      "-siteroot", (target.value / tmpSiteDir).absolutePath,
+    )
   )
-)
+}
