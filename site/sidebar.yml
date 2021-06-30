@@ -1,7 +1,11 @@
 sidebar:
   - title: unused 
-    url: docs/getting-started.html
+    url: docs/getting-started.md
   - title: unused
-    url: docs/reference.html
-  - title: unused
-    url: docs/contributing.html
+    url: docs/reference.md
+  - title: Contributing
+    subsection:
+      - title: unused
+        url: docs/contributing/setup.md
+      - title: unused
+        url: docs/contributing/releasing.md
