@@ -3,6 +3,7 @@ sidebar:
     url: docs/getting-started.md
   - title: unused
     url: docs/reference.md
+  - title: Blog
   - title: Contributing
     subsection:
       - title: unused

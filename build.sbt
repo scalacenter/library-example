@@ -29,6 +29,14 @@ lazy val root = project
   .aggregate(`library-example`)
 
 lazy val siteSettings = {
+  /*
+  Combine scaladoc and mdoc.
+  To do so, 
+   1. copy site to target/processed_site
+   2. use mdoc to process site/docs/ **.md
+   3. mdoc outputs new md files in target/processed_site/docs
+   4. scaladoc runs and outputs files in site-ouput
+  */
   val tmpSiteDir = "processed_site"
   val siteDir = "site"
   val outputSiteDir = "site-output"
