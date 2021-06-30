@@ -9,7 +9,7 @@ title: Contributing
 You will need the following tools:
 
 - [Git](https://git-scm.com/)
-- [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [OpenJDK 11](https://adoptopenjdk.net/)
 - [SBT](http://www.scala-sbt.org/)
 
 ## Workflow
