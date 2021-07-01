@@ -6,7 +6,7 @@ hasFrame: true
 
 A library that does nothing.
 
-### A fancy landing page for {{name}}
+### A fancy landing page for library example
 
 It can be .html or .md file and will not have a usual frame a naviagation so you are free to experiment!
 
