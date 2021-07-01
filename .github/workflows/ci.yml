@@ -9,6 +9,8 @@ jobs:
       - uses: olafurpg/setup-scala@v10
       - name: Code style
         run: sbt scalafmtCheck
+      - name: Scalafix
+        run: sbt "scalafixAll --check"
       - name: Tests
         run: sbt +test
       - name: Documentation

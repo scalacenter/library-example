@@ -29,3 +29,14 @@ paradoxProperties += ("scaladoc.base_url" -> "api")
 
 // binary compatibility check
 mimaPreviousArtifacts := Set.empty // Disabled on `master` branch
+
+inThisBuild(List(
+  semanticdbEnabled := true,
+  semanticdbVersion := scalafixSemanticdb.revision,
+  scalafixScalaBinaryVersion := "2.13",
+
+  scalacOptions ++= Seq(
+    "-Yrangepos",
+    "-Ywarn-unused"
+  ),
+))
