@@ -5,11 +5,5 @@ ci/secring.asc
 ci/travis-key
 ci/secrets.tar
 
-site-output
-
 # metals
-.bloop
-.metals
 .bsp
-.vscode
-metals.sbt
