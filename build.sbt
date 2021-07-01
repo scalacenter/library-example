@@ -4,7 +4,7 @@ lazy val `library-example` = project
   .in(file("."))
   .settings(
     name := "library-example",
-    organization := "ch.epfl.scala",
+    organization := "ch.epfl.scala", // also used as a `groupId` by Sonatype
     description := "A library that does nothing useful",
     crossScalaVersions := Seq("3.0.0", "2.13.6", "2.12.14"),
     scalaVersion := crossScalaVersions.value.head,
@@ -49,7 +49,7 @@ lazy val siteSettings = {
   }
 
   Def.settings(
-    Compile / doc / target := baseDirectory.value / outputSiteDir,
+    Compile / doc / target := target.value / outputSiteDir,
     mdocIn := baseDirectory.value / siteDir / "docs",
     mdocOut := target.value / tmpSiteDir / "docs",
     mdocVariables := Map("VERSION" -> version.value),
