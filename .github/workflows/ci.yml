@@ -14,4 +14,6 @@ jobs:
       - name: Tests
         run: sbt +test
       - name: Documentation
-        run: sbt doc
+        run: sbt "site/doc"
+      - name: Binary compatibility
+        run: sbt mimaReportBinaryIssues
