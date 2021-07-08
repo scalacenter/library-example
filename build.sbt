@@ -1,6 +1,7 @@
 import xerial.sbt.Sonatype._
 
-ThisBuild / scalaVersion := "3.0.1-RC2"
+val scala3Version := "3.0.1-RC2"
+ThisBuild / scalaVersion := scala3Version
 
 lazy val library = project
   .in(file("library"))
@@ -8,8 +9,7 @@ lazy val library = project
     name := "library-example",
     organization := "ch.epfl.scala", // also used as a `groupId` by Sonatype
     description := "A library that does nothing useful",
-    crossScalaVersions := Seq("3.0.0", "2.13.6", "2.12.14"),
-    scalaVersion := crossScalaVersions.value.head,
+    crossScalaVersions := Seq(scala3Version, "2.13.6", "2.12.14"),
     libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.8.3" % Test,
     testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
   ).settings(publishSettings)
