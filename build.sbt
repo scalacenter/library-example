@@ -1,6 +1,6 @@
 import xerial.sbt.Sonatype._
 
-val scala3Version := "3.0.1-RC2"
+val scala3Version = "3.0.1-RC2"
 ThisBuild / scalaVersion := scala3Version
 
 lazy val library = project
