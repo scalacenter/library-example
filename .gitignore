@@ -4,3 +4,6 @@ target/
 ci/secring.asc
 ci/travis-key
 ci/secrets.tar
+
+# metals
+.bsp

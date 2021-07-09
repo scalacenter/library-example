@@ -1,0 +1,12 @@
+sidebar:
+  - title: unused
+    url: docs/getting-started.md
+  - title: unused
+    url: docs/reference.md
+  - title: Blog
+  - title: Contributing
+    subsection:
+      - title: unused
+        url: docs/contributing/setup.md
+      - title: unused
+        url: docs/contributing/releasing.md

@@ -23,8 +23,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v12
       - name: Generate site
-        run: sbt makeSite
+        run: sbt "site/doc"
       - uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: target/site
+          folder: target/site-output

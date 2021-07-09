@@ -4,9 +4,9 @@ import scalaprops.{Property, Scalaprops}
 
 object Usage extends Scalaprops {
 
-  val testDoNothing: Property =
+  val testDoNothing =
 // #do-nothing
-    Property.forAll { x: Int =>
+    Property.forAll { (x: Int) =>
       Example.doNothing(x) == x
     }
 // #do-nothing
