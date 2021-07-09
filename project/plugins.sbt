@@ -1,7 +1,7 @@
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.4.1")
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.21")
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.9.2")
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.2")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.3")
 addSbtPlugin("com.typesafe" % "sbt-mima-plugin" % "0.9.2")
 addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.7")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.29")
