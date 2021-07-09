@@ -21,4 +21,4 @@ jobs:
       - name: Documentation
         run: sbt "site/doc"
       - name: Binary compatibility
-        run: sbt mimaReportBinaryIssues
+        run: sbt "library/mimaReportBinaryIssues"
