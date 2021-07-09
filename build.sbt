@@ -20,7 +20,6 @@ lazy val publishSettings = Def.settings(
   licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
   // publish to the Sonatype repository
   publishTo := sonatypePublishToBundle.value,
-  Compile / doc / target := file("site-output"),
   // binary compatibility check
   mimaPreviousArtifacts := Set.empty // Disabled on `master` branch
 )
@@ -62,4 +61,3 @@ lazy val siteSettings = {
     )
   )
 }
-
