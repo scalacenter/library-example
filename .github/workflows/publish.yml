@@ -24,7 +24,7 @@ jobs:
       - uses: olafurpg/setup-scala@v13
       - name: Generate site
         run: sbt makeSite
-      - uses: JamesIves/github-pages-deploy-action@4.1.4
+      - uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
           folder: target/site
