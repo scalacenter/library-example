@@ -1,5 +1,5 @@
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.4.1")
-addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.24")
+addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.3.0")
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.9.2")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.3")
 addSbtPlugin("com.typesafe" % "sbt-mima-plugin" % "1.0.1")
