@@ -30,7 +30,7 @@ jobs:
           java-version: 8
       - name: Generate site
         run: sbt makeSite
-      - uses: JamesIves/github-pages-deploy-action@v4.3.0
+      - uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: gh-pages
           folder: target/site
