@@ -15,6 +15,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
+          cache: sbt
       - name: Code style
         run: sbt scalafmtCheck
       - name: Linting
