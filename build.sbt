@@ -1,4 +1,4 @@
-crossScalaVersions := Seq("2.13.6", "2.12.14")
+crossScalaVersions := Seq("2.13.6", "2.12.16")
 scalaVersion := crossScalaVersions.value.head
 
 name := "library-example"
@@ -6,7 +6,7 @@ name := "library-example"
 // also used as a `groupId` by Sonatype
 organization := "ch.epfl.scala"
 
-libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.8.3" % Test
+libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.9.0" % Test
 testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
 
 description := "A library that does nothing useful"
