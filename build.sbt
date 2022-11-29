@@ -6,7 +6,7 @@ name := "library-example"
 // also used as a `groupId` by Sonatype
 organization := "ch.epfl.scala"
 
-libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.9.0" % Test
+libraryDependencies += "com.github.scalaprops" %% "scalaprops" % "0.9.1" % Test
 testFrameworks += new TestFramework("scalaprops.ScalapropsFramework")
 
 description := "A library that does nothing useful"
