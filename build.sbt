@@ -19,7 +19,7 @@ licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 publishTo := sonatypePublishToBundle.value
 
 // documentation website
-enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin)
+enablePlugins(ParadoxPlugin, ParadoxSitePlugin, MdocPlugin, SiteScaladocPlugin, SitePreviewPlugin)
 mdocIn := sourceDirectory.value / "documentation"
 mdocExtraArguments += "--no-link-hygiene"
 Compile / paradox / sourceDirectory := mdocOut.value
