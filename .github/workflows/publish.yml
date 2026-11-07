@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 25
           cache: sbt
       - run: sbt ci-release
         env:
@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 8
+          java-version: 25
       - name: Generate site
         run: sbt makeSite
       - uses: JamesIves/github-pages-deploy-action@v4.4.0
